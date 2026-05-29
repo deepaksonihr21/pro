@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pro Growth | Deepak WebCrafts PRO</title>
+<meta name="description" content="High-performance custom-coded business frameworks. Turning continuous traffic into live client actions.">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root { 
+        --p: #bc13fe; 
+        --s: #00f2ff; 
+        --bg: #060609; 
+        --bg-alt: #0c0c12;
+        --card: rgba(20, 20, 27, 0.4); 
+        --border: rgba(255, 255, 255, 0.04);
+        --text-dim: #7e7e8c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html.lenis { height: auto; }
+    .lenis-smooth { scroll-behavior: initial; }
+    
+    body { 
+        background: var(--bg); 
+        color: white; 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- BACKGROUND TEXTURE & BLOB MESH --- */
+    body::before {
+        content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        opacity: 0.015; pointer-events: none; z-index: 99999;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none'/%3e%3cfilter id='noiseFilter'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3e%3c/filter%3e%3crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3e%3c/svg%3e");
+    }
+    .blob {
+        position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(188,19,254,0.08) 0%, transparent 70%);
+        top: 10%; right: -100px; z-index: 1; pointer-events: none; filter: blur(40px);
+    }
+
+    /* --- SYSTEMS HEAD CONTROLS --- */
+    .tracker { position: fixed; top: 0; left: 0; width: 100%; height: 5px; background: #111; z-index: 10000; }
+    .progress { width: 75%; height: 100%; background: linear-gradient(90deg, var(--p), var(--s)); box-shadow: 0 0 15px var(--p); }
+    .indicator {
+        position: fixed; top: 20px; right: 25px; font-size: 0.65rem; font-weight: 800; color: var(--p);
+        letter-spacing: 2px; z-index: 9999; background: rgba(6,6,9,0.8); backdrop-filter: blur(12px);
+        padding: 6px 14px; border-radius: 30px; border: 1px solid var(--border);
+    }
+
+    /* --- NAVIGATION --- */
+    .navbar {
+        position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center;
+        padding: 20px 5%; background: rgba(6, 6, 9, 0.75); backdrop-filter: blur(20px);
+        z-index: 999; border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 1.15rem; font-weight: 800; text-decoration: none; color: white; }
+    .logo span { color: var(--p); }
+    .nav-link { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: white; text-decoration: none; border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; transition: 0.3s; }
+    .nav-link:hover { border-color: var(--s); color: var(--s); }
+
+    /* --- LAYOUT SHELLS --- */
+    .section-wrap { width: 100%; position: relative; }
+    .bg-alternate { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 130px 24px; }
+
+    .label { color: var(--s); font-weight: 800; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px; display: block; text-align: center; }
+    h2 { font-size: clamp(2rem, 5vw, 3rem); text-align: center; margin-bottom: 60px; font-weight: 800; letter-spacing: -1.5px; }
+    h2 span { background: linear-gradient(90deg, var(--s), var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* --- HERO SYSTEM --- */
+    .hero { height: 95vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; }
+    .hero h1 { font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800; line-height: 1.1; letter-spacing: -2.5px; }
+    .hero h1 span { background: linear-gradient(135deg, var(--s), var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { margin-top: 25px; color: var(--text-dim); font-size: 1.2rem; max-width: 650px; }
+
+    /* --- DIRECT TRANSITIONAL CTA STRIP --- */
+    .cta-strip { display: flex; justify-content: space-between; align-items: center; padding: 30px 45px; background: rgba(255,255,255,0.01); border: 1px solid var(--border); border-radius: 24px; margin-top: -50px; position: relative; z-index: 10; backdrop-filter: blur(10px); }
+    .cta-strip p { font-size: 0.95rem; font-weight: 600; color: #eee; }
+    .cta-strip p span { color: var(--s); }
+    .strip-btn { color: white; text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--s); padding-bottom: 4px; transition: 0.3s; }
+    .strip-btn:hover { color: var(--s); }
+
+    /* --- CONVERSION CARDS MATRIX --- */
+    .conv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+    .conv-card { background: var(--card); padding: 50px 40px; border-radius: 40px; border: 1px solid var(--border); transition: all 0.4s ease; position: relative; overflow: hidden; backdrop-filter: blur(10px); }
+    .conv-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--p), var(--s)); opacity: 0; transition: 0.3s; }
+    .conv-card:hover { border-color: rgba(188,19,254,0.3); transform: translateY(-6px); box-shadow: 0 15px 40px rgba(188,19,254,0.03); }
+    .conv-card:hover::before { opacity: 1; }
+    .conv-card i { font-size: 1.8rem; color: var(--s); margin-bottom: 25px; display: block; }
+    .conv-card h3 { font-size: 1.35rem; margin-bottom: 12px; color: #fff; font-weight: 700; }
+    .conv-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
+
+    /* --- MOCK DASHBOARD INTERFACES --- */
+    .feature-row { display: flex; gap: 60px; align-items: center; margin-bottom: 120px; }
+    .feature-row:last-child { margin-bottom: 0; }
+    .feature-ui { flex: 1.2; min-width: 320px; background: #0f0f15; border-radius: 32px; border: 1px solid var(--border); padding: 30px; position: relative; overflow: hidden; }
+    
+    /* Pure CSS Live Dashboard UI Mockup Components */
+    .ui-head { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
+    .ui-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.1); }
+    .ui-dot.active { background: var(--s); }
+    .ui-bar { height: 12px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-bottom: 12px; width: 70%; }
+    .ui-metric { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; }
+    .ui-val { font-size: 2.2rem; font-weight: 800; color: white; line-height: 1; }
+    .ui-chart { display: flex; gap: 8px; align-items: flex-end; height: 80px; }
+    .chart-line { width: 6px; background: linear-gradient(0deg, var(--p), var(--s)); border-radius: 10px; transition: 0.5s; }
+
+    .feature-text { flex: 1; min-width: 300px; text-align: left; }
+    .feature-text h3 { font-size: 2rem; margin-bottom: 15px; color: white; font-weight: 800; letter-spacing: -0.5px; }
+    .feature-text p { font-size: 1.05rem; color: var(--text-dim); margin-bottom: 30px; }
+    .feature-list { list-style: none; }
+    .feature-list li { font-size: 0.95rem; color: #eee; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-weight: 500; }
+    .feature-list li i { color: var(--s); font-size: 0.85rem; }
+
+    /* --- AUTO-RUN TESTIMONIAL MARQUEE --- */
+    .t-marquee { width: 100%; overflow: hidden; padding: 20px 0; display: flex; position: relative; }
+    .t-track { display: flex; gap: 25px; width: max-content; animation: loopScroll 25s linear infinite; }
+    .t-card { background: var(--card); border: 1px solid var(--border); padding: 35px; border-radius: 24px; width: 380px; text-align: left; backdrop-filter: blur(10px); }
+    .t-card p { font-size: 0.95rem; color: #ccc; font-style: italic; }
+    .t-profile { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+    .t-avatar { width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; color: var(--s); border: 1px solid var(--border); }
+    .t-info h5 { font-size: 0.9rem; font-weight: 700; }
+    .t-info span { font-size: 0.75rem; color: var(--text-dim); display: block; }
+    @keyframes loopScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* --- INTERACTIVE STATS MATRIX --- */
+    .stats-matrix { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin-bottom: 40px; }
+    .matrix-card { background: #0c0c12; border: 1px solid var(--border); border-radius: 24px; padding: 40px; text-align: center; }
+    .matrix-card h4 { font-size: 2.8rem; font-weight: 800; color: white; line-height: 1; }
+    .matrix-card h4 span { color: var(--s); }
+    .matrix-card p { font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 2px; margin-top: 8px; font-weight: 600; }
+
+    /* --- SYSTEM MINI FAQ --- */
+    .faq-mini { max-width: 800px; margin: 0 auto; display: grid; gap: 15px; }
+    .faq-block { background: var(--card); border: 1px solid var(--border); padding: 25px 30px; border-radius: 20px; text-align: left; }
+    .faq-block h5 { font-size: 1.05rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .faq-block h5 i { color: var(--p); font-size: 0.85rem; }
+    .faq-block p { color: var(--text-dim); font-size: 0.95rem; padding-left: 24px; }
+
+    /* --- PREMIUM CTA CONVERSION HUB --- */
+    .cta-hub { background: radial-gradient(circle at top, rgba(188, 19, 254, 0.12) 0%, transparent 70%); border: 1px solid rgba(188,19,254,0.2); padding: 100px 40px; border-radius: 48px; text-align: center; }
+    .cta-hub h2 { font-size: clamp(2.2rem, 6vw, 3.5rem); margin-bottom: 15px; }
+    .cta-hub p { color: var(--text-dim); font-size: 1.1rem; max-width: 580px; margin: 0 auto; }
+    
+    /* --- BUTTON INTERACTIONS --- */
+    .btn { display: inline-block; padding: 22px 55px; background: #fff; color: #000; text-decoration: none; border-radius: 100px; font-weight: 800; text-transform: uppercase; margin-top: 35px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 10px 30px rgba(255,255,255,0.08); border: 1px solid transparent; font-size: 0.9rem; letter-spacing: 1px; }
+    .btn:hover { background: transparent; color: white; border-color: var(--p); box-shadow: 0 0 30px rgba(188,19,254,0.25); transform: translateY(-4px); }
+
+    /* --- FOOTER ASSEMBLY --- */
+    footer { text-align: center; padding: 70px 20px; color: #333444; font-size: 0.75rem; letter-spacing: 5px; border-top: 1px solid var(--border); text-transform: uppercase; background: #030305; }
+
+    @media (max-width: 768px) { .feature-row { flex-direction: column; } .cta-strip { flex-direction: column; gap: 15px; text-align: center; } }
+</style>
+</head>
+<body>
+
+<div class="tracker"><div class="progress"></div></div>
+<div class="indicator">PRO ENGINE // DEMO 3</div>
+
+<!-- Navbar Navigation Shell -->
+<nav class="navbar">
+    <a href="#" class="logo">Deepak<span>WebCrafts</span></a>
+    <a href="https://instagram.com/deepakwebcrafts" target="_blank" class="nav-link">Get Blueprint</a>
+</nav>
+
+<div class="section-wrap">
+    <div class="blob"></div>
+    <div class="container" style="padding-top: 100px; padding-bottom: 100px;">
+        <!-- Hero Core -->
+        <section class="hero">
+            <span class="label">High-Velocity Operations</span>
+            <h1>Stop Tracking Clicks.<br>Start <span>Owning Markets.</span></h1>
+            <p>Deploy a hyper-optimized 5-section operational terminal engineered cleanly from scratch to drive organic client acquisition pipelines.</p>
+            <a href="#pipeline" class="btn">Analyze Execution Framework</a>
+        </section>
+
+        <!-- Dynamic Lead Strip Conversion Hub -->
+        <div class="cta-strip reveal">
+            <p>Ready to migrate away from slow stock blocks? <span>Production allocation active.</span></p>
+            <a href="https://instagram.com/deepakwebcrafts" target="_blank" class="strip-btn">Initialize Call Router</a>
+        </div>
+    </div>
+</div>
+
+<!-- Core Framework Shell -->
+<div class="section-wrap bg-alternate" id="pipeline">
+    <div class="container">
+        <span class="label">System Metrics</span>
+        <h2>Architectures Configured to <span>Acquire Revenue</span></h2>
+        
+        <div class="conv-grid">
+            <div class="conv-card reveal">
+                <i class="fa-solid fa-bullseye"></i>
+                <h3>Direct Messaging Logic</h3>
+                <p>We structure explicit context hierarchy and conversion-driven text layouts that guide consumer intent without philosophy.</p>
+            </div>
+            <div class="conv-card reveal">
+                <i class="fa-solid fa-shuffle"></i>
+                <h3>Funnel Grid Mapping</h3>
+                <p>Every dynamic container block is structurally locked into position to eliminate viewport drop-offs entirely.</p>
+            </div>
+            <div class="conv-card reveal">
+                <i class="fa-solid fa-gauge-high"></i>
+                <h3>Elite Script Velocity</h3>
+                <p>Vanishingly low background weights ensure your data layers deploy in under 1 second for perfect retention metrics.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Feature Demonstration (Dashboard Mocks) Shell -->
+<div class="section-wrap">
+    <div class="container">
+        
+        <!-- Live UI Matrix Row 1 -->
+        <div class="feature-row reveal">
+            <div class="feature-ui">
+                <div class="ui-head">
+                    <div class="ui-dot active"></div><div class="ui-dot"></div><div class="ui-dot"></div>
+                </div>
+                <div class="ui-bar" style="width: 40%;"></div>
+                <div class="ui-bar" style="width: 85%;"></div>
+                <div class="ui-metric">
+                    <div class="ui-val">+142%</div>
+                    <div class="ui-chart">
+                        <div class="chart-line" style="height: 30px;"></div>
+                        <div class="chart-line" style="height: 55px;"></div>
+                        <div class="chart-line" style="height: 40px;"></div>
+                        <div class="chart-line" style="height: 75px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-text">
+                <h3>Custom Engineered UIs</h3>
+                <p>We eliminate ready-made templates completely. Each terminal starts on an optimized blank blueprint script to ensure distinct brand authority.</p>
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-square-check"></i> High-fidelity layout rendering vectors</li>
+                    <li><i class="fa-solid fa-square-check"></i> Native smooth timeline dynamics</li>
+                    <li><i class="fa-solid fa-square-check"></i> 100% responsive fluid mobile frameworks</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Live UI Matrix Row 2 -->
+        <div class="feature-row reveal" style="flex-direction: row-reverse;">
+            <div class="feature-ui" style="background: #0d0914;">
+                <div class="ui-head">
+                    <div class="ui-dot"></div><div class="ui-dot active"></div><div class="ui-dot"></div>
+                </div>
+                <div class="ui-bar" style="width: 60%; background: rgba(0,242,255,0.1);"></div>
+                <div class="ui-metric" style="margin-top: 40px;">
+                    <div class="ui-val" style="font-size: 1.8rem; color: var(--s);">SEO Secure</div>
+                    <i class="fa-solid fa-arrow-trend-up" style="font-size: 2rem; color: var(--s);"></i>
+                </div>
+            </div>
+            <div class="feature-text">
+                <h3>Technical SEO Blueprints</h3>
+                <p>Integrated structural meta tag setups ensure clean search indexation parameters, driving faster discovery over regional customer queries.</p>
+                <a href="#cta" class="strip-btn" style="border-color: var(--p);">View Secure Allocation Matrix</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Continuous Auto-Scrolling Testimonials Loop Shell -->
+<div class="section-wrap bg-alternate" style="padding: 100px 0;">
+    <span class="label" style="margin-bottom: 40px;">Live Validation Networks</span>
+    <div class="t-marquee">
+        <div class="t-track">
+            <!-- Card 1 -->
+            <div class="t-card">
+                <p>"The custom UI engine removed all structural speed friction. Our conversion rates scaled significantly inside the first launch interval."</p>
+                <div class="t-profile">
+                    <div class="t-avatar">HR</div>
+                    <div class="t-info"><h5>Harish Rao</h5><span>Operations Lead, CoreTech</span></div>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="t-card">
+                <p>"Pure hand-coded code execution is unmatched. Uptime and mobile conversion metrics are flawlessly rigid on every platform update."</p>
+                <div class="t-profile">
+                    <div class="t-avatar">NK</div>
+                    <div class="t-info"><h5>Nisha Kapoor</h5><span>Independent Consultant</span></div>
+                </div>
+            </div>
+            <!-- Repeat Loop Block Set -->
+            <div class="t-card">
+                <p>"The custom UI engine removed all structural speed friction. Our conversion rates scaled significantly inside the first launch interval."</p>
+                <div class="t-profile">
+                    <div class="t-avatar">HR</div>
+                    <div class="t-info"><h5>Harish Rao</h5><span>Operations Lead, CoreTech</span></div>
+                </div>
+            </div>
+            <div class="t-card">
+                <p>"Pure hand-coded code execution is unmatched. Uptime and mobile conversion metrics are flawlessly rigid on every platform update."</p>
+                <div class="t-profile">
+                    <div class="t-avatar">NK</div>
+                    <div class="t-info"><h5>Nisha Kapoor</h5><span>Independent Consultant</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Structural FAQ & Final Action Systems Shell -->
+<div class="section-wrap">
+    <div class="container">
+        
+        <!-- Live Tracker Stats Matrix -->
+        <div class="stats-matrix reveal">
+            <div class="matrix-card">
+                <h4>99.9<span>%</span></h4>
+                <p>Performance Index Score</p>
+            </div>
+            <div class="matrix-card">
+                <h4>Sub-1<span>s</span></h4>
+                <p>Content Paint Velocity</p>
+            </div>
+            <div class="matrix-card">
+                <h4>72<span>H</span></h4>
+                <p>Average Deployment Cycle</p>
+            </div>
+        </div>
+
+        <!-- Mini Structural FAQs -->
+        <div class="faq-mini reveal" style="margin-bottom: 120px;">
+            <div class="faq-block">
+                <h5><i class="fa-solid fa-terminal"></i> What specific optimizations are configured?</h5>
+                <p>We deploy purely clean semantic frameworks without any background engine weights, minimizing interaction delays on high-volume servers.</p>
+            </div>
+            <div class="faq-block">
+                <h5><i class="fa-solid fa-terminal"></i> Can additional segments connect later?</h5>
+                <p>Yes. The backend structure utilizes modular code properties, meaning scaling your layout features requires zero technical overhaul.</p>
+            </div>
+        </div>
+
+        <!-- Core Conversion Hub -->
+        <div class="cta-hub reveal" id="cta">
+            <span class="label">Rapid Core Launch Processing</span>
+            <h2>Ready to Transition Your <span>Digital Footprint?</span></h2>
+            <p>Stop deploying generic platform layouts. Secure a custom-coded system built specifically to lock down structural return-on-investment parameters.</p>
+            <a href="https://instagram.com/deepakwebcrafts" class="btn" target="_blank">Deploy System Pipeline</a>
+        </div>
+
+    </div>
+</div>
+
+<!-- Footer Shell Assembly -->
+<footer>DEEPAK WEBCRAFTS • HAND-CODED IN HARYANA • MMXXVI</footer>
+
+<!-- Lenis Smooth Scroll Engine & GSAP Script Libraries -->
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+    // Initialize Lenis Core Smooth Scroll
+    const lenis = new Lenis()
+    function raf(time) {
+        lenis.raf(time)
+        requestAnimationFrame(raf)
+    }
+    requestAnimationFrame(raf)
+
+    // GSAP ScrollTrigger Integration for Fluid Reveal Elements
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach((el) => {
+        gsap.fromTo(el, 
+            { opacity: 0, y: 35 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.9, 
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 88%",
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+    });
+
+    // Native Document Scrolled Progress Indicators
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.querySelector('.progress').style.width = scrolled + '%';
+    });
+</script>
+
+</body>
+</html>

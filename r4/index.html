@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pro Finale | Deepak WebCrafts PRO</title>
+<meta name="description" content="High-performance business systems engineered with clean custom code frameworks. Optimized for direct lead conversion.">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root { 
+        --p: #bc13fe; 
+        --s: #00f2ff; 
+        --bg: #040406; 
+        --card: rgba(15, 15, 22, 0.45); 
+        --border: rgba(255, 255, 255, 0.04);
+        --text-dim: #797986;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html.lenis { height: auto; }
+    .lenis-smooth { scroll-behavior: initial; }
+    
+    body { 
+        background: var(--bg); 
+        color: white; 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- PREMIUM CANVAS BACKGROUND MESH & PARTICLES --- */
+    body::before {
+        content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        opacity: 0.015; pointer-events: none; z-index: 99999;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none'/%3e%3cfilter id='noiseFilter'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3e%3c/filter%3e%3crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3e%3c/svg%3e");
+    }
+    .particle-mesh {
+        position: absolute; width: 100%; height: 100vh; top: 0; left: 0;
+        background: radial-gradient(circle at 50% 30%, rgba(0, 242, 255, 0.04) 0%, rgba(188, 19, 254, 0.03) 50%, transparent 100%);
+        z-index: 1; pointer-events: none;
+    }
+
+    /* --- PRE-LOADER TIMELINE INTERFACES --- */
+    .tracker { position: fixed; top: 0; left: 0; width: 100%; height: 6px; background: #0f0f14; z-index: 10000; }
+    .progress { width: 100%; height: 100%; background: linear-gradient(90deg, var(--p), var(--s)); box-shadow: 0 0 20px var(--s); }
+    .status-badge {
+        position: fixed; top: 20px; right: 25px; font-size: 0.65rem; font-weight: 800; color: var(--s);
+        letter-spacing: 2px; z-index: 9999; background: rgba(4,4,6,0.85); backdrop-filter: blur(12px);
+        padding: 6px 14px; border-radius: 30px; border: 1px solid var(--border);
+    }
+
+    /* --- GLASSMORPHISM NAVBAR --- */
+    .navbar {
+        position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center;
+        padding: 18px 5%; background: rgba(4, 4, 6, 0.65); backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px); z-index: 999; border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 1.15rem; font-weight: 800; text-decoration: none; color: white; letter-spacing: -0.5px; }
+    .logo span { color: var(--s); }
+    .nav-btn {
+        padding: 10px 22px; border: 1px solid var(--border); border-radius: 30px;
+        color: white; text-decoration: none; font-size: 0.8rem; font-weight: 600;
+        transition: 0.3s; background: rgba(255,255,255,0.01);
+    }
+    .nav-btn:hover { border-color: var(--p); box-shadow: 0 0 20px rgba(188,19,254,0.15); }
+
+    /* --- CONTAINER FRAMING --- */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+    .section { padding: 140px 0; border-bottom: 1px solid var(--border); }
+    
+    .label { 
+        color: var(--s); font-weight: 800; font-size: 0.7rem; letter-spacing: 5px; 
+        text-transform: uppercase; margin-bottom: 20px; display: block; text-align: center; 
+    }
+    h2 { font-size: clamp(2rem, 5vw, 3.2rem); text-align: center; margin-bottom: 60px; font-weight: 800; letter-spacing: -2px; line-height: 1.15; }
+    h2 span { background: linear-gradient(90deg, #fff, var(--s)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* --- HERO HUB --- */
+    .hero { height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+    .hero h1 { font-size: clamp(2.8rem, 8vw, 5.2rem); font-weight: 800; line-height: 1.05; letter-spacing: -3px; max-width: 950px; }
+    .hero h1 span { background: linear-gradient(90deg, var(--p), var(--s)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 40px rgba(0,242,255,0.15)); }
+    .hero p { margin-top: 30px; color: var(--text-dim); font-size: 1.2rem; max-width: 700px; }
+
+    /* --- INFINITE LOGO SLIDER SYSTEM --- */
+    .slider-marquee { width: 100%; overflow: hidden; padding: 30px 0; background: rgba(255,255,255,0.005); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; }
+    .slider-track { display: flex; gap: 80px; width: max-content; animation: continuousScroll 25s linear infinite; }
+    .slider-item { font-size: 0.8rem; font-weight: 700; color: #444552; letter-spacing: 3px; text-transform: uppercase; }
+    @keyframes continuousScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* --- METRICS SUBSECTION --- */
+    .metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin-top: 40px; }
+    .metric-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px 20px; text-align: center; backdrop-filter: blur(10px); }
+    .metric-card h4 { font-size: 3rem; font-weight: 800; color: white; line-height: 1; }
+    .metric-card h4 span { color: var(--s); }
+    .metric-card p { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-top: 10px; font-weight: 700; }
+
+    /* --- INTERACTIVE HOVER BENEFIT GRID --- */
+    .benefit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+    .benefit-card { background: var(--card); padding: 50px 40px; border-radius: 40px; border: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-align: left; backdrop-filter: blur(12px); }
+    .benefit-card:hover { border-color: rgba(0, 242, 255, 0.3); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0, 242, 255, 0.03); }
+    .benefit-card i { font-size: 1.8rem; color: var(--s); margin-bottom: 25px; display: block; }
+    .benefit-card h3 { color: white; margin-bottom: 12px; font-size: 1.4rem; font-weight: 700; }
+    .benefit-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
+
+    /* --- REALISTIC RETENTION TESTIMONIAL --- */
+    .trust-bar { background: #08080d; padding: 90px 40px; border-radius: 40px; text-align: center; border: 1px solid var(--border); margin: 40px 0; }
+    .trust-bar p { font-size: clamp(1.2rem, 4vw, 1.55rem); font-weight: 400; font-style: italic; color: #eee; max-width: 850px; margin: 0 auto; line-height: 1.7; }
+    .trust-meta { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 30px; }
+    .trust-avatar { width: 45px; height: 45px; background: #161622; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--s); font-size: 0.85rem; border: 1px solid var(--border); }
+    .trust-details { text-align: left; }
+    .trust-details h5 { font-size: 0.95rem; font-weight: 700; }
+    .trust-details p { color: var(--text-dim); font-size: 0.75rem; }
+
+    /* --- ENGINE / TIMELINE DETAILS SECTION --- */
+    .engine-row { display: flex; align-items: center; gap: 60px; margin: 60px 0; flex-wrap: wrap; }
+    .engine-text { flex: 1; min-width: 320px; text-align: left; }
+    .engine-text h3 { font-size: 2.2rem; color: white; margin-bottom: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .engine-text p { color: var(--text-dim); font-size: 1.05rem; margin-bottom: 35px; }
+    
+    /* Pure CSS Interactive Functional Component Wireframe (Visual Depth) */
+    .engine-visual { flex: 1.1; min-width: 320px; height: 380px; background: linear-gradient(135deg, #0d0d14 0%, #050508 100%); border-radius: 40px; border: 1px solid var(--border); padding: 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+    .window-header { display: flex; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 15px; margin-bottom: 10px; }
+    .window-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.1); }
+    .window-dot.active { background: var(--p); }
+    .code-block { height: 10px; background: rgba(255,255,255,0.02); border-radius: 4px; width: 60%; margin-bottom: 8px; }
+    .ui-graph { display: flex; align-items: flex-end; gap: 12px; height: 120px; border-left: 1px solid rgba(255,255,255,0.05); padding-left: 15px; margin-top: 20px; }
+    .graph-pillar { width: 100%; background: linear-gradient(0deg, var(--p) 0%, var(--s) 100%); border-radius: 6px; height: 40px; transition: 0.5s; }
+
+    /* --- PRODUCTION TIMELINE LAYOUT --- */
+    .timeline { max-width: 800px; margin: 0 auto; display: grid; gap: 20px; text-align: left; }
+    .timeline-node { background: var(--card); border: 1px solid var(--border); padding: 30px 40px; border-radius: 24px; display: flex; gap: 30px; align-items: center; }
+    .node-index { font-size: 2rem; font-weight: 800; color: #161622; line-height: 1; }
+    .node-content h4 { font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 5px; }
+    .node-content p { color: var(--text-dim); font-size: 0.9rem; }
+
+    /* --- STRATEGIC BOOKING / PACKAGING BOX --- */
+    .booking-matrix { background: radial-gradient(circle at top, rgba(0, 242, 255, 0.08) 0%, transparent 70%); border: 1px solid rgba(0, 242, 255, 0.15); border-radius: 48px; padding: 80px 40px; text-align: center; max-width: 750px; margin: 0 auto; }
+    .booking-matrix h3 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .booking-matrix p { color: var(--text-dim); font-size: 1.05rem; max-width: 580px; margin: 0 auto 35px; }
+
+    /* --- ACTION BUTTON INTERFACES --- */
+    .btn { 
+        display: inline-block; padding: 22px 60px; background: var(--s); color: #000; 
+        text-decoration: none; border-radius: 100px; font-weight: 800; text-transform: uppercase; 
+        font-size: 0.9rem; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+        box-shadow: 0 10px 30px rgba(0, 242, 255, 0.15); border: 1px solid transparent;
+    }
+    .btn:hover { background: transparent; color: white; border-color: var(--s); box-shadow: 0 0 30px rgba(0, 242, 255, 0.3); transform: translateY(-4px); }
+
+    /* --- FOOTER ASSET --- */
+    footer { text-align: center; padding: 80px 20px; color: #31313d; font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; border-top: 1px solid var(--border); margin-top: 100px; background: #020203; }
+
+    @media (max-width: 768px) { .engine-row { flex-direction: column; text-align: center; } .timeline-node { flex-direction: column; align-items: flex-start; gap: 10px; } .slider-track { gap: 40px; } }
+</style>
+</head>
+<body>
+
+<div class="tracker"><div class="progress"></div></div>
+<div class="status-badge">PRO MATRIX // FINALE DEMO 4</div>
+<div class="particle-mesh"></div>
+
+<!-- Custom Header Navigation Shell -->
+<nav class="navbar">
+    <a href="#" class="logo">Deepak<span>WebCrafts</span></a>
+    <a href="https://instagram.com/deepakwebcrafts" target="_blank" class="nav-btn">View Grid</a>
+</nav>
+
+<div class="container">
+    
+    <!-- 1. HERO MAIN BLOCK -->
+    <section class="hero">
+        <span class="label">System Deployment Active</span>
+        <h1>Websites Configured to <span>Secure Markets.</span></h1>
+        <p>Deploy a high-fidelity 5-section operational terminal built via pure code layers. Optimized for extreme mobile page speeds and continuous consumer trust.</p>
+        <a href="#pipeline" class="btn" style="margin-top: 40px;">Initialize Framework Grid</a>
+    </section>
+
+    <!-- Infinite Corporate Logo Strip Scroller -->
+    <div class="slider-marquee">
+        <div class="slider-track">
+            <div class="slider-item">// Interface Optimization</div>
+            <div class="slider-item">// Custom Blueprint System</div>
+            <div class="slider-item">// Semantic SEO Engine</div>
+            <div class="slider-item">// Zero Stock Templates</div>
+            <!-- Loop Duplicates -->
+            <div class="slider-item">// Interface Optimization</div>
+            <div class="slider-item">// Custom Blueprint System</div>
+            <div class="slider-item">// Semantic SEO Engine</div>
+            <div class="slider-item">// Zero Stock Templates</div>
+        </div>
+    </div>
+
+    <!-- Live Performance Metrics Counters Matrix -->
+    <div class="metrics-row reveal" id="pipeline">
+        <div class="metric-box metric-card">
+            <h4>100%</h4>
+            <p>Hand-Coded Architecture</p>
+        </div>
+        <div class="metric-box metric-card">
+            <h4>Sub-1<span>s</span></h4>
+            <p>First Contentful Paint</p>
+        </div>
+        <div class="metric-box metric-card">
+            <h4>72<span>H</span></h4>
+            <p>Maximum Turnaround Cycle</p>
+        </div>
+    </div>
+
+    <!-- 2. VALUE PROPOSITION MATRIX -->
+    <section class="section">
+        <span class="label">Strategic Execution</span>
+        <h2>Blueprints Developed to <span>Convert Traffic</span></h2>
+        
+        <div class="benefit-grid">
+            <div class="benefit-card reveal">
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                <h3>Regional Indexing Mastery</h3>
+                <p>Clean structural metadata tag integration locks your asset into local search keywords, bringing direct visibility options on Google.</p>
+            </div>
+            <div class="benefit-card reveal">
+                <i class="fa-solid fa-arrows-to-eye"></i>
+                <h3>Intentional UI Layouts</h3>
+                <p>We eliminate confusing interface patterns. Section layers align explicitly with human scanning paths to drive faster lead interactions.</p>
+            </div>
+            <div class="benefit-card reveal">
+                <i class="fa-solid fa-truck-fast"></i>
+                <h3>Rapid Native Deployment</h3>
+                <p>Your fully custom operational shell goes live inside a 3-day buffer without sacrificing long-term technical scaling traits.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. REALISTIC VERIFIED CLIENT VALIDATION BAR -->
+    <section class="trust-bar reveal">
+        <p>"Migrating away from stock components onto DeepakWebCrafts' custom code configuration solved our mobile speed friction. Inquiries scaled organically within weeks."</p>
+        <div class="trust-meta">
+            <div class="trust-avatar">RD</div>
+            <div class="trust-details">
+                <h5>Rohan Deshmukh</h5>
+                <p>Founder, Deshmukh Logistics Portals</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ENGINE INTEGRATION DETAIL SUBSECTION -->
+    <section class="section">
+        <div class="engine-row reveal">
+            <div class="engine-text">
+                <h3>High-Fidelity Motion Parameters</h3>
+                <p>We leverage native GSAP scroll configurations and lightweight interface vector properties to yield immersive browsing sequences that project brand authority immediately.</p>
+                <ul style="color: var(--text-dim); list-style: none; font-size: 0.95rem; display: grid; gap: 12px;">
+                    <li><i class="fa-solid fa-square-check" style="color: var(--s); margin-right: 10px;"></i> Customized semantic UI design cells</li>
+                    <li><i class="fa-solid fa-square-check" style="color: var(--s); margin-right: 10px;"></i> 100% liquid viewport responsiveness</li>
+                    <li><i class="fa-solid fa-square-check" style="color: var(--s); margin-right: 10px;"></i> High-visibility call-to-action routing</li>
+                </ul>
+            </div>
+            <!-- Pure Code UI Workspace Wireframe Preview -->
+            <div class="engine-visual">
+                <div class="window-header">
+                    <div class="window-dot active"></div><div class="window-dot"></div><div class="window-dot"></div>
+                </div>
+                <div>
+                    <div class="code-block" style="width: 45%;"></div>
+                    <div class="code-block" style="width: 75%;"></div>
+                </div>
+                <div class="ui-graph">
+                    <div class="graph-pillar" style="height: 35px;"></div>
+                    <div class="graph-pillar" style="height: 85px;"></div>
+                    <div class="graph-pillar" style="height: 60px;"></div>
+                    <div class="graph-pillar" style="height: 110px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTION TIME-SERIES PIPELINE STEPS -->
+    <section class="section">
+        <span class="label">Onboarding Path</span>
+        <h2>System Launch <span>Execution Timeline</span></h2>
+        
+        <div class="timeline">
+            <div class="timeline-node reveal">
+                <div class="node-index">01</div>
+                <div class="node-content">
+                    <h4>Parameter Scope Mapping</h4>
+                    <p>We extract structural targets, lock color patterns, and wire out baseline conversion paths before generating scripts.</p>
+                </div>
+            </div>
+            <div class="timeline-node reveal">
+                <div class="node-index">02</div>
+                <div class="node-content">
+                    <h4>Hand-Coding Execution</h4>
+                    <p>Line-by-line configuration of optimized layouts, interaction animations, and cross-platform native properties.</p>
+                </div>
+            </div>
+            <div class="timeline-node reveal">
+                <div class="node-index">03</div>
+                <div class="node-content">
+                    <h4>Global Host Routing</h4>
+                    <p>Strict load checks across Google PageSpeed criteria, followed by instant routing to high-security production servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. ULTIMATE CTA BOOKING ALLOCATION BLOCK -->
+    <section class="section" style="border: none;">
+        <div class="booking-matrix reveal">
+            <span class="label" style="color: var(--p);">Production Window Open</span>
+            <h3>Transition Your Digital Strategy.</h3>
+            <p>Stop hosting sluggish templates that damage your customer conversion ratios. Secure a custom-coded business system built directly for return-on-investment metrics.</p>
+            <a href="https://instagram.com/deepaksonihr21" target="_blank" class="btn">Connect via Instagram Router</a>
+        </div>
+    </section>
+
+    <!-- FOOTER FRAME ASSEMBLY -->
+    <footer>DEEPAK WEBCRAFTS • HAND-CODED IN HARYANA • MMXXVI</footer>
+</div>
+
+<!-- Lenis Smooth Scroll Engine & GSAP Script Core Repositories -->
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+    // Initialize Lenis Core Smooth Scroll
+    const lenis = new Lenis()
+    function raf(time) {
+        lenis.raf(time)
+        requestAnimationFrame(raf)
+    }
+    requestAnimationFrame(raf)
+
+    // GSAP ScrollTrigger Setup for Fluid Reveal Elements
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach((el) => {
+        gsap.fromTo(el, 
+            { opacity: 0, y: 35 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.9, 
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 88%",
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+    });
+
+    // Native Document Scrolled Progress Indicators
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.querySelector('.progress').style.width = scrolled + '%';
+    });
+</script>
+
+</body>
+</html>

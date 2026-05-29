@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO & OpenGraph Meta Tags -->
+<title>Deepak WebCrafts | Custom Premium Interfaces for Creators & Pros</title>
+<meta name="description" content="We hand-code elite, sub-1s websites for freelancers, creators, and professionals. No generic templates. 100% custom brand architecture.">
+<meta property="og:title" content="Deepak WebCrafts | Premium Custom Interfaces">
+<meta property="og:description" content="Stop using copy-paste templates. Get a custom high-converting digital terminal built from scratch.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://instagram.com/deepakwebcrafts">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root { 
+        --p: #bc13fe; /* Neon Purple */
+        --s: #00f2ff; /* Electric Cyan */
+        --bg: #07070a; /* Premium Dark Gray, not pure black */
+        --card: #0d0d12; 
+        --border: rgba(255, 255, 255, 0.05);
+        --text-muted: #808090;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html.lenis { height: auto; }
+    .lenis-smooth { scroll-behavior: initial; }
+    
+    body { 
+        background: var(--bg); 
+        color: white; 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- NOISE TEXTURE OVERLAY --- */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        opacity: 0.015;
+        pointer-events: none;
+        z-index: 99999;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none'/%3e%3cfilter id='noiseFilter'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3e%3c/filter%3e%3crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3e%3c/svg%3e");
+    }
+
+    /* --- TIMELINE TRACKER --- */
+    .tracker { position: fixed; top: 0; left: 0; width: 100%; height: 5px; background: #111; z-index: 10000; }
+    .progress { width: 25%; height: 100%; background: linear-gradient(90deg, var(--p), var(--s)); box-shadow: 0 0 15px var(--p); }
+    .tracker-text {
+        position: fixed; top: 18px; right: 25px; font-size: 0.65rem; font-weight: 800; color: var(--s);
+        letter-spacing: 2px; z-index: 9999; background: rgba(7,7,10,0.8); backdrop-filter: blur(10px);
+        padding: 6px 14px; border-radius: 30px; border: 1px solid var(--border);
+    }
+
+    /* --- STICKY NAVBAR --- */
+    .navbar {
+        position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center;
+        padding: 20px 5%; background: rgba(7, 7, 10, 0.75); backdrop-filter: blur(20px);
+        z-index: 999; border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -1px; text-decoration: none; color: white; }
+    .logo span { color: var(--p); }
+    .nav-btn {
+        padding: 10px 22px; border: 1px solid var(--border); border-radius: 30px;
+        color: white; text-decoration: none; font-size: 0.85rem; font-weight: 600;
+        transition: 0.3s; background: rgba(255,255,255,0.02);
+    }
+    .nav-btn:hover { border-color: var(--s); box-shadow: 0 0 15px rgba(0,242,255,0.2); }
+
+    /* --- FLOATING WHATSAPP CTA --- */
+    .whatsapp-float {
+        position: fixed; bottom: 30px; right: 30px; z-index: 999;
+        background: #25d366; width: 60px; height: 60px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.8rem; color: white; text-decoration: none;
+        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); transition: 0.3s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5); }
+
+    /* --- SECTIONS LAYOUT --- */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 140px 0; border-bottom: 1px solid var(--border); position: relative; }
+    
+    .label { 
+        color: var(--s); font-weight: 800; font-size: 0.75rem; letter-spacing: 4px; 
+        text-transform: uppercase; margin-bottom: 15px; display: inline-block;
+        background: rgba(0, 242, 255, 0.05); padding: 4px 12px; border-radius: 30px;
+    }
+    
+    h2 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -1.5px; line-height: 1.2; margin-bottom: 20px; }
+    h2 span { background: linear-gradient(90deg, #fff, #999); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .sec-desc { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin-bottom: 60px; }
+
+    /* --- HERO SECTION --- */
+    .hero { 
+        height: 85vh; display: flex; flex-direction: column; justify-content: center; 
+        align-items: center; text-align: center; position: relative;
+        background: radial-gradient(circle at 50% 40%, #170221 0%, #07070a 60%); 
+    }
+    .hero h1 { font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -3px; max-width: 900px; }
+    .hero h1 span { background: linear-gradient(135deg, var(--p) 0%, var(--s) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(188,19,254,0.2)); }
+    .hero p { margin-top: 25px; color: var(--text-muted); font-size: 1.2rem; max-width: 650px; }
+
+    /* --- BUTTONS & STATES --- */
+    .btn { 
+        display: inline-block; padding: 22px 55px; background: white; color: black; 
+        text-decoration: none; border-radius: 100px; font-weight: 700; font-size: 0.95rem;
+        text-transform: uppercase; margin-top: 35px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+        box-shadow: 0 10px 30px rgba(255,255,255,0.1); border: 1px solid transparent;
+    }
+    .btn:hover { background: transparent; color: white; border-color: var(--p); box-shadow: 0 0 30px rgba(188,19,254,0.3); transform: translateY(-4px); }
+
+    /* --- PERFORMANCE STATS STRIP --- */
+    .stats-strip {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px; border: 1px solid var(--border); border-radius: 40px;
+        padding: 40px; background: rgba(255,255,255,0.01); backdrop-filter: blur(10px);
+        margin-top: -40px; position: relative; z-index: 10;
+    }
+    .stat-item h3 { font-size: 2.8rem; font-weight: 800; color: white; line-height: 1; }
+    .stat-item h3 span { color: var(--s); }
+    .stat-item p { color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 8px; font-weight: 600; }
+
+    /* --- BENTO CARD GRID (MOUSE GLOW READY) --- */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+    .card { 
+        background: var(--card); padding: 50px 40px; border-radius: 40px; 
+        border: 1px solid var(--border); transition: all 0.4s ease; text-align: left;
+        position: relative; overflow: hidden;
+    }
+    .card:hover { 
+        border-color: rgba(188, 19, 254, 0.4); transform: translateY(-8px); 
+        box-shadow: 0 20px 40px rgba(188, 19, 254, 0.05); 
+    }
+    .card h3 { color: white; margin-bottom: 15px; font-size: 1.35rem; font-weight: 700; }
+    .card h3 span { color: var(--p); }
+    .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+    /* --- REAL PROJECT PREVIEWS (MOCKUPS) --- */
+    .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px; }
+    @media(max-width: 768px){ .showcase-grid { grid-template-columns: 1fr; } }
+    .project-card { 
+        background: #0e0e14; border-radius: 40px; border: 1px solid var(--border);
+        overflow: hidden; transition: 0.4s; text-align: left;
+    }
+    .project-card:hover { border-color: var(--s); box-shadow: 0 15px 45px rgba(0,242,255,0.08); }
+    .project-mock { height: 260px; background: linear-gradient(45deg, #111, #1f1f2e); display: flex; align-items: center; justify-content: center; font-size: 4rem; color: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); }
+    .project-detail { padding: 35px; }
+    .project-detail h4 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+    .project-detail p { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* --- TIMELINE METHOD STEPS --- */
+    .step { display: flex; align-items: center; gap: 40px; margin-bottom: 30px; padding: 45px; background: var(--card); border-radius: 40px; border: 1px solid var(--border); text-align: left;}
+    .step-num { font-size: 3.5rem; font-weight: 800; color: #1c1c24; line-height: 1; min-width: 80px; }
+    .step-content h4 { font-size: 1.4rem; margin-bottom: 8px; color: white; font-weight: 700; }
+    .step-content p { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* --- TESTIMONIALS SLIDER --- */
+    .slider-wrap { background: #09090e; padding: 60px 40px; border-radius: 40px; border: 1px solid var(--border); text-align: left; max-width: 850px; margin: 0 auto; }
+    .slider-wrap p { font-size: 1.3rem; font-weight: 500; line-height: 1.7; color: #eee; }
+    .client-profile { display: flex; align-items: center; gap: 15px; margin-top: 30px; }
+    .avatar { width: 50px; height: 50px; background: var(--p); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+    .client-info h5 { font-size: 1rem; font-weight: 700; }
+    .client-info p { color: var(--text-muted); font-size: 0.8rem; }
+
+    /* --- FAQ BLOCK --- */
+    .faq-container { max-width: 800px; margin: 0 auto; }
+    .faq-item { margin-bottom: 15px; padding: 30px; background: var(--card); border-radius: 24px; border: 1px solid var(--border); text-align: left; }
+    .faq-item b { color: white; display: flex; align-items: center; gap: 12px; font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+    .faq-item b i { color: var(--s); font-size: 0.9rem; }
+    .faq-item p { color: var(--text-muted); font-size: 0.95rem; padding-left: 26px; }
+
+    /* --- ELITE CTA BOX --- */
+    .cta-box { text-align: center; padding: 100px 40px; background: radial-gradient(circle at top, rgba(188, 19, 254, 0.12) 0%, transparent 70%); border-radius: 50px; border: 1px solid rgba(188,19,254,0.2); }
+    .cta-box h2 { font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: 15px; }
+    .cta-box p { color: var(--text-muted); font-size: 1.1rem; max-width: 550px; margin: 0 auto; }
+
+    /* --- FOUNDER BADGE --- */
+    .founder-card { display: flex; align-items: center; gap: 35px; max-width: 650px; margin: 80px auto 0; background: rgba(255,255,255,0.01); padding: 30px; border-radius: 30px; border: 1px solid var(--border); text-align: left; }
+    .f-avatar { width: 70px; height: 70px; background: linear-gradient(135deg, var(--p), var(--s)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; color: black; }
+    .f-text h4 { font-size: 1.1rem; font-weight: 700; }
+    .f-text span { color: var(--p); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .f-text p { color: var(--text-muted); font-size: 0.85rem; margin-top: 5px; }
+
+    /* --- FOOTER --- */
+    footer { text-align: center; padding: 80px 20px; color: #334; font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; border-top: 1px solid var(--border); margin-top: 100px; }
+
+    @media (max-width: 768px) { .step { flex-direction: column; align-items: flex-start; gap: 15px; } .founder-card { flex-direction: column; text-align: center; } }
+</style>
+</head>
+<body>
+
+<div class="tracker"><div class="progress"></div></div>
+<div class="tracker-text">PRO CONFIG // DEMO 1</div>
+
+<!-- Sticky Navbar -->
+<nav class="navbar">
+    <a href="#" class="logo">Deepak<span>WebCrafts</span></a>
+    <a href="https://instagram.com/deepakwebcrafts" target="_blank" class="nav-btn">View Portfolio</a>
+</nav>
+
+<!-- Floating WhatsApp CTA -->
+<a href="https://wa.me/your_number" class="whatsapp-float" target="_blank" aria-label="Contact on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<div class="container">
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <span class="label">Elite Web Systems Only</span>
+        <h1>Stop Blending In. Build Your <span>Absolute Authority.</span></h1>
+        <p>We build ultra-premium, hand-coded digital spaces for creators, freelancers, and pros who need extreme performance and high-ticket client trust.</p>
+        <a href="#work" class="btn">Explore System Engineering</a>
+    </section>
+
+    <!-- Real-time Performance Metrics Strip -->
+    <div class="stats-strip reveal">
+        <div class="stat-item">
+            <h3>Sub-1<span>s</span></h3>
+            <p>Loading Velocity</p>
+        </div>
+        <div class="stat-item">
+            <h3>100%</h3>
+            <p>Custom Architecture</p>
+        </div>
+        <div class="stat-item">
+            <h3>Zero</h3>
+            <p>Template Fillers</p>
+        </div>
+    </div>
+
+    <!-- The Framework (Replaced Philosophy) -->
+    <section class="section" id="work">
+        <span class="label">The Blueprint</span>
+        <h2>High-Conversion <span>Architectures</span></h2>
+        <p class="sec-desc">We eliminate the generic layout feel. Every single line of code is structurally engineered to turn random attention into real income.</p>
+        
+        <div class="grid">
+            <div class="card reveal">
+                <h3>Distinct Identity <span>//</span></h3>
+                <p>Tailor-made structural interface completely aligned with your premium visual identity. No clones.</p>
+            </div>
+            <div class="card reveal">
+                <h3>Frictionless Funnel <span>//</span></h3>
+                <p>Strategic section hierarchy engineered explicitly to push a user from curiosity to direct appointment booking.</p>
+            </div>
+            <div class="card reveal">
+                <h3>Peak Engine <span>//</span></h3>
+                <p>Vanishingly low load speeds built over custom blueprints. Maximum performance on every viewport.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Case Previews -->
+    <section class="section">
+        <span class="label">Live Deployments</span>
+        <h2>Recent Production <span>Models</span></h2>
+        <p class="sec-desc">Take a look at systems currently converting raw traffic into high-ticket asset authority.</p>
+
+        <div class="showcase-grid">
+            <div class="project-card reveal">
+                <div class="project-mock"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <div class="project-detail">
+                    <h4>Creator Terminal v1</h4>
+                    <p>High-fidelity portfolio interface deployed for visual directors and high-reach editors.</p>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-mock"><i class="fa-solid fa-cubes"></i></div>
+                <div class="project-detail">
+                    <h4>Pro Consulting Grid</h4>
+                    <p>Clean semantic profile built for individual corporate advisors demanding elite discovery rates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Flow -->
+    <section class="section">
+        <span class="label">Deployment Blueprint</span>
+        <h2>No Delays. Pure <span>Execution.</span></h2>
+        <p class="sec-desc">How we transform your raw brand assets into a working premium infrastructure inside 72 hours.</p>
+        
+        <div class="step reveal">
+            <div class="step-num">01</div>
+            <div class="step-content">
+                <h4>System Lock & Extraction</h4>
+                <p>We isolate your core demographic goals and eliminate all useless layout bloat before typing code.</p>
+            </div>
+        </div>
+
+        <div class="step reveal">
+            <div class="step-num">02</div>
+            <div class="step-content">
+                <h4>Hand-Crafting Interface</h4>
+                <p>Line-by-line coding of highly fluid grid frameworks, custom color variations, and high-end animations.</p>
+            </div>
+        </div>
+
+        <div class="step reveal">
+            <div class="step-num">03</div>
+            <div class="step-content">
+                <h4>Global Launch</h4>
+                <p>Final system performance check followed by instant routing to hyper-secure production servers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Testimonial Slider Preview -->
+    <section class="section">
+        <div class="slider-wrap reveal">
+            <p>"We ditched our sluggish template structure for DeepakWebCrafts' custom terminal. The structural shift instantly doubled our high-ticket call volumes because the interface screams elite execution."</p>
+            <div class="client-profile">
+                <div class="avatar">AM</div>
+                <div class="client-info">
+                    <h5>Aman Malhotra</h5>
+                    <p>Independent Creative Director</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="section">
+        <span class="label">Technical Queries</span>
+        <h2>Clear Answers, <span>No Jargon</span></h2>
+        
+        <div class="faq-container">
+            <div class="faq-item reveal">
+                <b><i class="fa-solid fa-circle-nodes"></i> Why choose hand-coding over ready platforms?</b>
+                <p>Ready software platforms lock you into heavy systems that destroy mobile speeds. Pure code ensures your profile opens instantly and works flawlessly without breaking down.</p>
+            </div>
+            <div class="faq-item reveal">
+                <b><i class="fa-solid fa-circle-nodes"></i> Is the layout expandable for future custom models?</b>
+                <p>Completely. The framework uses semantic modular building blocks. Adding sections later takes minimal development overhead.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Section -->
+    <section class="section" style="border:none;">
+        <div class="cta-box reveal">
+            <h2>Ready to Command Absolute Authority?</h2>
+            <p>Skip the templates. Secure your fully custom-crafted terminal blueprint today.</p>
+            <a href="https://instagram.com/deepakwebcrafts" class="btn" target="_blank">Launch Project Terminal</a>
+        </div>
+        
+        <!-- Founder Section -->
+        <div class="founder-card reveal">
+            <div class="f-avatar">DS</div>
+            <div class="f-text">
+                <h4>Deepak Soni</h4>
+                <span>Founder // DeepakWebCrafts</span>
+                <p>"Templates make elite creators look basic. We build hand-coded digital spaces that capture, command, and convert human attention into measurable authority."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>DEEPAK WEBCRAFTS • HAND-CODED IN HARYANA • MMXXVI</footer>
+</div>
+
+<!-- Lenis Smooth Scroll Engine & GSAP Integration -->
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+    // Initialize Lenis Smooth Scroll
+    const lenis = new Lenis()
+    function raf(time) {
+        lenis.raf(time)
+        requestAnimationFrame(raf)
+    }
+    requestAnimationFrame(raf)
+
+    // GSAP ScrollTrigger Setup for Smooth Reveal Animations
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach((el) => {
+        gsap.fromTo(el, 
+            { opacity: 0, y: 40 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1, 
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+    });
+
+    // Simple Progress Tracker Update
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.querySelector('.progress').style.width = scrolled + '%';
+    });
+</script>
+
+</body>
+</html>
